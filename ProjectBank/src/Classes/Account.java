@@ -11,13 +11,14 @@ public class Account {
     public Card card;
     private Debit debit;
     private Loans loan;
-    protected final Currencies currencies;
+    protected Currencies currencies;
     private boolean isDebit = false;
     private boolean ActiveLoan = false;
     private int bankId;
     private IBPA ibpa;
     private final ArrayList<Transaction> accountTransactions = new ArrayList();
 
+    public Account(){}
     public Account(double totalBalance, Currencies currencies) {
         this.currencies = currencies;
         this.totalBalance = totalBalance;
@@ -135,6 +136,10 @@ public class Account {
         return this.debit;
     }
 
+    public void setDebitObject(Debit debit) {
+        this.debit = debit;
+    }
+
     public void setDebit(Debit debit) {
         this.debit = debit;
     }
@@ -149,6 +154,10 @@ public class Account {
 
     public boolean isDebit() {
         return this.isDebit;
+    }
+
+    public void setisDebit(boolean debit) {
+        isDebit = debit;
     }
 
     public void setDebit(boolean debit) {
@@ -177,6 +186,10 @@ public class Account {
 
     public Currencies getCurrencies() {
         return this.currencies;
+    }
+
+    public void setCurrencies(Currencies currencies) {
+        this.currencies = currencies;
     }
 
     public String toString() {
