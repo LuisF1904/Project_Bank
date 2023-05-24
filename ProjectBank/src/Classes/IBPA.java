@@ -8,25 +8,34 @@ import java.util.ArrayList;
 
 public class IBPA {
     public static ArrayList<Bank> bankList = new ArrayList();
+    private static IBPA instance;
 
     public IBPA() {
     }
 
-    public static ArrayList<Bank> getBank() {
-        return bankList;
+    public static IBPA getInstance() {
+        if(instance == null){
+            synchronized (IBPA.class) {
+                if(instance == null){
+                    instance = new IBPA();
+                }
+            }
+        }
+        return instance;
     }
 
     public static void setBank(ArrayList<Bank> bankList) {
         IBPA.bankList = bankList;
     }
 
-    public static TransactionStatus InterbankPayment(Account sender, Account receiver, double amount, Currencies currencies) {
+    public TransactionStatus InterbankPayment(Account sender, Account receiver, double amount, Currencies currencies) {
         if (sender.currencies == receiver.currencies && currencies == receiver.currencies && amount <= sender.getTotalBalance()) {
             sender.setTotalBalance(sender.getTotalBalance() - amount);
             receiver.setTotalBalance(receiver.getTotalBalance() + amount);
             return TransactionStatus.DONE;
         } else {
             return TransactionStatus.REJECTED;
-        }
-    }
+        }}
+
+
 }

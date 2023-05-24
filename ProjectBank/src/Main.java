@@ -7,23 +7,22 @@ import Classes.Report.UserReport;
 public class Main {
     public static void main(String[] args) {
 
+        IBPA ibpa = IBPA.getInstance(); //Singleton Usage
         Bank Millenium = new Bank("Millenium");
+        Bank BES = new Bank("BES");
+
+        ibpa.bankList.add(Millenium);
+        ibpa.bankList.add(BES);
+
         Users Bruno = Millenium.CreateUser("Bruno", 919917503, "bruno@oficial.com");
-        Users Diogo = Millenium.CreateUser("Diogo", 910788933, "diogo@email.com");
-        Users Luis = Millenium.CreateUser("Luis", 967269754, "luis@gmail.com");
+        Users Diogo = BES.CreateUser("Diogo", 910788933, "diogo@email.com");
 
-        Account BrunoAccount = Bruno.CreateAccount(2000.0, Currencies.EUR);
-        Account DiogoAccount = Diogo.CreateAccount(10.0, Currencies.EUR);
-        Account LuisAccount = Luis.CreateAccount(1000.0, Currencies.EUR);
+        Account acc_Bruno = Bruno.CreateAccount(1500,Currencies.EUR);
+        Account acc_Diogo = Diogo.CreateAccount(900,Currencies.EUR);
 
-        UserReport  Bruno_UserReport = new UserReport(Bruno); //user report test
-        System.out.println(Bruno_UserReport.getReportContent());
-
-        AccountReport Diogo_AccountReport = new AccountReport(DiogoAccount); //account report test
-        System.out.println(Diogo_AccountReport.getReportContent());
-
-        BankReport Millenium_BankReport = new BankReport(Millenium); //bank report test
-        System.out.println(Millenium_BankReport.getReportContent());
+        System.out.println("BEFORE: \nBalance of Bruno: "+ acc_Bruno.getTotalBalance()+" \nBalance of Diogo: "+ acc_Diogo.getTotalBalance());
+        ibpa.InterbankPayment(acc_Bruno,acc_Diogo,200,Currencies.EUR);
+        System.out.println("AFTER: \nBalance of Bruno: "+ acc_Bruno.getTotalBalance()+" \nBalance of Diogo: "+ acc_Diogo.getTotalBalance());
 
     }
 }
